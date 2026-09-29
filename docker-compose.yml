@@ -1,0 +1,41 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: app_db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d app_db"]
+      interval: 5s
+      retries: 10
+
+  # Opcional: usado para escalar o tempo real horizontalmente (Redis Pub/Sub) – ver README
+  redis:
+    image: redis:7-alpine
+
+  app:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/app_db
+      JWT_SECRET: troque-por-um-segredo-longo-e-aleatorio
+      COOKIE_SECURE: "false" # use "true" atrás de HTTPS
+      ALERTA_PARADO_MIN: "15"
+      ALERTA_PAUSA_MIN: "30"
+    ports:
+      - "3000:3000"
+
+  # HTTPS (produção): descomente e ajuste o domínio no Caddyfile
+  # caddy:
+  #   image: caddy:2-alpine
+  #   ports: ["80:80", "443:443"]
+  #   volumes: ["./Caddyfile:/etc/caddy/Caddyfile"]
+
+volumes:
+  pgdata:
