@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+/*
+  Design system Mazzochini — inspirado no logo:
+  cinza-carvão (#4a4a4a) + verde-limão (#a4d233), estilo limpo "Apple":
+  fundo claro, muito respiro, vidro fosco, cantos generosos e sombras suaves.
+*/
+@theme {
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* Neutros (escala Apple) */
+  --color-slate-50: #fafafa;
+  --color-slate-100: #f5f5f7;
+  --color-slate-200: #e8e8ed;
+  --color-slate-300: #d2d2d7;
+  --color-slate-400: #a1a1a6;
+  --color-slate-500: #6e6e73;
+  --color-slate-600: #515154;
+  --color-slate-700: #424245;
+  --color-slate-800: #2c2c2e;
+  --color-slate-900: #1d1d1f;
+  --color-slate-950: #111113;
+
+  /* Cor primária = verde da marca (a escala "indigo" agora é o verde do logo) */
+  --color-indigo-50: #f6fbe9;
+  --color-indigo-100: #eaf5c9;
+  --color-indigo-200: #d8ec9b;
+  --color-indigo-300: #c2e065;
+  --color-indigo-400: #a4d233;
+  --color-indigo-500: #7fae1a;
+  --color-indigo-600: #5a8210;
+  --color-indigo-700: #476810;
+  --color-indigo-800: #39530f;
+  --color-indigo-900: #2f440f;
+
+  --radius-lg: 0.875rem;
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.75rem;
+  --radius-3xl: 2.25rem;
+
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.04), 0 6px 24px rgb(0 0 0 / 0.05);
+  --shadow-xl: 0 20px 60px rgb(0 0 0 / 0.14);
+  --shadow-2xl: 0 30px 90px rgb(0 0 0 / 0.18);
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: #f5f5f7;
+  color: #1d1d1f;
+}
+
+h1,
+h2 {
+  letter-spacing: -0.022em;
+}
+
+@utility glass {
+  background: rgb(255 255 255 / 0.72);
+  -webkit-backdrop-filter: saturate(180%) blur(22px);
+  backdrop-filter: saturate(180%) blur(22px);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@utility animate-rise {
+  animation: rise 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Interações suaves em botões, links e cards */
+button,
+a,
+input,
+select {
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.12s ease,
+    opacity 0.18s ease;
+}
+button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+input:focus,
+select:focus {
+  box-shadow: 0 0 0 4px rgb(164 210 51 / 0.28);
+}
+
+/* Barras de rolagem discretas */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #d2d2d7 transparent;
+}
+
+/* Leaflet mais clean */
+.leaflet-container {
+  font-family: inherit;
+  background: #eef0f2;
+}
+.leaflet-popup-content-wrapper {
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.18);
+}
